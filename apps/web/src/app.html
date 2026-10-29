@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="text-scale" content="scale" />
+		<style>
+			.i18n-pending body {
+				visibility: hidden;
+			}
+		</style>
+		<script>
+			// The server renders English. Pick the stored or browser language before first paint and
+			// hide the page until the app has switched to it (see $lib/i18n), with a timeout fallback.
+			(function () {
+				var root = document.documentElement;
+				var locale = null;
+				try {
+					locale = localStorage.getItem('locale');
+				} catch (e) {}
+				if (locale !== 'en' && locale !== 'fi')
+					locale = /^fi\b/i.test(navigator.language || '') ? 'fi' : 'en';
+				root.lang = locale;
+				if (locale === 'en') return;
+				root.classList.add('i18n-pending');
+				setTimeout(function () {
+					root.classList.remove('i18n-pending');
+				}, 3000);
+			})();
+		</script>
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>

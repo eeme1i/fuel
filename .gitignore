@@ -1,0 +1,12 @@
+.DS_Store
+node_modules/
+.pnpm-store/
+.wrangler/
+.turbo/
+.env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+apps/api/wrangler.jsonc
+apps/web/wrangler.jsonc
